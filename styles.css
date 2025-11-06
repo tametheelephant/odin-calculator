@@ -1,7 +1,7 @@
 
 .calculator {
     background-color: lightgray;
-    margin: auto;
+    margin: 100px auto;
     width: 300px;
     height: 350px;
     padding: 20px;
@@ -29,6 +29,10 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+}
+
+button:active {
+    background-color: white;
 }
 
 /* Active operator visual state */
