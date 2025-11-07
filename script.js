@@ -26,6 +26,7 @@ const equalsButton = document.querySelector('button.equals');
 
 // Calculator state
 let firstOperand = null;
+let secondOperand = null;
 let currentOperator = null;
 let shouldResetScreen = false;
 
@@ -61,20 +62,20 @@ function handleNumberClick(button) {
 }
 
 function handleEqualsClick() {
-    if (currentOperator === null || shouldResetScreen) return;
+    if (currentOperator === null) return; 
 
-    const secondOperand = getDisplayNumber();
+    // If we just performed an operation, use the existing second operand
+    secondOperand = shouldResetScreen ? secondOperand : getDisplayNumber();
+
     try {
         const result = operate(currentOperator, firstOperand, secondOperand);
         setDisplay(result);
         firstOperand = result;
-        currentOperator = null;
         shouldResetScreen = true;
         clearOperator();
     } catch (err) {
         setDisplay('Error');
         firstOperand = null;
-        currentOperator = null;
         shouldResetScreen = true;
         clearOperator();
     }
@@ -112,6 +113,7 @@ operatorButtons.forEach(button => {
 function resetCalculator() {
     setDisplay('0');
     firstOperand = null;
+    secondOperand = null;
     currentOperator = null;
     shouldResetScreen = false;
     clearOperator();
