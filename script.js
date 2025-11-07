@@ -144,3 +144,49 @@ backspaceButton.addEventListener('click', () => {
     const newValue = display.value.length < 2 ? 0 : display.value.slice(0, -1);
     setDisplay(newValue);
 });
+
+// Keyboard support
+document.addEventListener('keydown', (event) => {
+    const key = event.key;
+
+    // Digits
+    if (/^[0-9]$/.test(key)) {
+        const btn = Array.from(numberButtons).find(b => b.textContent === key);
+        if (btn) handleNumberClick(btn);
+        return;
+    }
+
+    // Decimal point
+    if (key === '.' || key === ',') {
+        if (decimalButton && !decimalButton.disabled) {
+            handleNumberClick(decimalButton);
+            if (decimalButton) decimalButton.disabled = true;
+        }
+        return;
+    }
+
+    // Operators
+    if (['+','-','*','/'].includes(key)) {
+        const btn = Array.from(operatorButtons).find(b => b.textContent === key);
+        if (btn) handleOperatorClick(btn);
+        return;
+    }
+
+    // Equals
+    if (key === 'Enter' || key === '=') {
+        handleEqualsClick();
+        return;
+    }
+
+    // Backspace
+    if (key === 'Backspace') {
+        if (backspaceButton) backspaceButton.click();
+        return;
+    }
+
+    // Clear
+    if (key === 'Clear') {
+        if (clearButton) clearButton.click();
+        return;
+    }
+});
